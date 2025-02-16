@@ -1,5 +1,6 @@
 import express from "express";
-import { config } from "./config";
+import VerifyToken from "./middlewares/VerifyToken";
+import DatabaseAndServerConnection from "./config/DatabaseAndServerConnection";
 
 const app = express();
 
@@ -7,6 +8,8 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 });
 
-app.listen(config.port, () => {
-    console.log(`Server is up and listening at ${config.port}`);
+app.post("/user", VerifyToken, (req, res) => {
+    res.status(200).json({ name: "Ashar" });
 });
+
+DatabaseAndServerConnection();
