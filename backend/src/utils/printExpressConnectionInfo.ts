@@ -3,7 +3,7 @@ import boxen from "boxen";
 
 export default function printExpressConnectionInfo(port: number | string) {
     const infoBox = boxen(
-        chalk.green(`Server is up and running at ${port}`)
+        chalk.green(`Server is up and running at http://localhost:${port}`)
         ,
         {
             padding: 1,

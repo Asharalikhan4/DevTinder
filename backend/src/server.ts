@@ -1,15 +1,16 @@
-import express from "express";
-import VerifyToken from "./middlewares/VerifyToken";
-import DatabaseAndServerConnection from "./config/DatabaseAndServerConnection";
-
+import express, { Request, Response } from "express";
 const app = express();
+import morgan from "morgan";
+import DatabaseAndServerConnection from "./config/DatabaseAndServerConnection";
+import UserRoutes from "./routes/UserRoutes";
 
-app.get("/", (req, res) => {
+// Console format -> type of request, endpoint of request, status of request, time it took, size of resource
+app.use(morgan("dev"));
+
+app.get("/", (req: Request, res: Response) => {
     res.send("Hello World");
 });
 
-app.post("/user", VerifyToken, (req, res) => {
-    res.status(200).json({ name: "Ashar" });
-});
+app.use("/user", UserRoutes);
 
-DatabaseAndServerConnection();
+DatabaseAndServerConnection(app);
