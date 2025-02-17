@@ -16,9 +16,26 @@ export const signup = async (req: Request, res: Response) => {
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
         const users = await UserModel.find();
-        res.status(200).json({ message: "Users Fetched Successfully", users: users });
+        if (users.length === 0) {
+            res.status(200).json({ message: "No Users Found" });
+        } else {
+            res.status(200).json({ message: "Users Fetched Successfully", users: users });
+        };
     } catch (error) {
         res.status(400).json({ message: "Error fetching all users" });
         console.error("Error in getAllUsers", error);
+    }
+};
+
+export const getUserById = async (req: Request, res: Response) => {
+    try {
+        const user = await UserModel.findById(req.params.id);
+        if (user) {
+            res.status(200).json({ message: "User Fetched Successfully", user: user });
+        } else {
+            res.status(200).json({ message: "No User Found" });
+        };
+    } catch (error) {
+        res.status(400).json({ message: "Error fetching User" });
     }
 };
