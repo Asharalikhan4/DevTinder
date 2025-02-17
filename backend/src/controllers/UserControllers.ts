@@ -40,6 +40,24 @@ export const getUserById = async (req: Request, res: Response) => {
     }
 };
 
+export const updateUserById = async (req: Request, res: Response) => {
+
+    const updateOptions = {
+        returnDocument: "after", // will return the updated document
+    };
+
+    try {
+        const user = await UserModel.findByIdAndUpdate(req.params.id, req.body, updateOptions);
+        if (user) {
+            res.status(200).json({ message: "User Updated Successfully" });
+        } else {
+            res.status(200).json({ message: "No User Found" });
+        };
+    } catch (error) {
+        res.status(400).json({ message: "Error Updating User" });
+    };
+};
+
 export const deleteUserById = async (req: Request, res: Response) => {
     try {
         // Here i'm using the shorthand property to pass the id. This is the same as { id: req.params.id }
