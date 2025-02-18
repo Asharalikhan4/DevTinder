@@ -4,8 +4,8 @@ const router = Router();
 
 router.post("/signup", signup);
 router.get("/get-all-users", getAllUsers);
-router.get("/get-user-by-id/:id", getUserById);
-router.delete("/delete-user-by-id/:id", deleteUserById);
-router.patch("/update-user-by-id/:id", updateUserById);
+router.get("/get-user-by-id/:userId", getUserById);
+router.delete("/delete-user-by-id/:userId", deleteUserById);
+router.patch("/update-user-by-id/:userId", updateUserById);
 
 export default router;
