@@ -1,10 +1,12 @@
 import { FC } from "react";
+import { RouterProvider } from "react-router";
+import router from "./router/Routes";
 
 const App: FC = () => {
     return (
-        <div>
-            <h1>React App</h1>
-        </div>
+        <>
+            <RouterProvider router={router} />
+        </>
     );
 };
 

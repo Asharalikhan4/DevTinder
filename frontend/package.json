@@ -16,12 +16,16 @@
   "devDependencies": {
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "daisyui": "^4.12.23",
     "parcel": "^2.13.3",
     "process": "^0.11.10",
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router": "^7.2.0",
+    "react-router-dom": "^7.2.0"
   }
 }
