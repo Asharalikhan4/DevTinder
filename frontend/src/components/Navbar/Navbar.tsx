@@ -2,7 +2,8 @@ import { FC, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CustomButton from "../CustomButton";
 import { Link, useNavigate } from "react-router";
-// import { logout } from "../../store/authSlice"; // Import your logout action
+import axios from "axios";
+import { removeUser } from "@/redux/slices/userSlice";
 
 const Navbar: FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,9 +11,16 @@ const Navbar: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleLogout = () => {
-        // dispatch(logout());
-        navigate("/");
+    const handleLogout = async() => {
+        try {
+            const response = await axios.post(`${process.env.BASE_URL}/user/logout`, {
+                withCredentials: true
+            });
+            dispatch(removeUser({}));
+            navigate("/signin");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
