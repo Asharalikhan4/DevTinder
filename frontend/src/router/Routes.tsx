@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout/Layout";
-import HomePage from "@/pages/Home/HomePage";
+import FeedPage from "@/pages/Feed/FeedPage";
 import SigninPage from "@/pages/Signin/SigninPage";
 import { createBrowserRouter } from "react-router";
 
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <HomePage />
+                element: <FeedPage />
             },
             {
                 path: "/signin",

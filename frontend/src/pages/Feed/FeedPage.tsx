@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-const HomePage: FC = () => {
+const FeedPage: FC = () => {
     return (
         <div>
             <h1 className="text-4xl">Home Page</h1>
@@ -8,4 +8,4 @@ const HomePage: FC = () => {
     );
 };
 
-export default HomePage;
+export default FeedPage;

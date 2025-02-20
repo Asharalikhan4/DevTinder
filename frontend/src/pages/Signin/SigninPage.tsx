@@ -1,9 +1,17 @@
 import React, { FC, useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "@/redux/slices/userSlice";
+import { useNavigate } from "react-router";
+import CustomButton from "@/components/CustomButton";
 
 const SigninPage: FC = () => {
-    const [emailId, setEmailId] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [emailId, setEmailId] = useState<string>("test@gmail.com");
+    const [password, setPassword] = useState<string>("asharrotH01+");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
@@ -14,7 +22,8 @@ const SigninPage: FC = () => {
             },{
                 withCredentials: true
             });
-            console.log("this is signin api response", response);
+            dispatch(addUser(response?.data?.user));
+            navigate("/");
         } catch (error) {
             console.error(error);
         }
@@ -60,12 +69,7 @@ const SigninPage: FC = () => {
                         />
                     </div>
                     <div className="flex items-center justify-between">
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                            Sign In
-                        </button>
+                        <CustomButton type="submit" className="w-full">Sign In</CustomButton>
                     </div>
                 </form>
             </div>
