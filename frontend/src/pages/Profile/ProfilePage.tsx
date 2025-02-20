@@ -1,0 +1,11 @@
+import { FC } from "react";
+
+const ProfilePage: FC = () => {
+    return (
+        <div>
+            <h1 className="text-4xl">Profile Page</h1>
+        </div>
+    );
+};
+
+export default ProfilePage;

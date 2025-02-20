@@ -30,8 +30,8 @@ const SigninPage: FC = () => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
-            <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        <div className="min-h-screen flex items-center justify-center bg-opacity-50 px-4 sm:px-0">
+            <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 w-full max-w-md">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Sign In</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
