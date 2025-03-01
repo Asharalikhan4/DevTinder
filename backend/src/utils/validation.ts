@@ -20,3 +20,17 @@ export const validateSignupData = (req: Request) => {
         throw new Error("Enter a strong password");
     };
 };
+
+export const validateSigninData = (req: Request) => {
+    const { emailId } = req.body;
+
+    if(!isEmail(emailId)) {
+        throw new Error("Email is not valid");
+    };
+};
+
+export const validateEditProfileData = (req: Request) => {
+    const editableFields = ["firstName", "lastName", "emailId", "photoUrl", "about", "gender", "age", "skills"];
+    const idEditAllowed = Object.keys(req.body).every(field => editableFields.includes(field));
+    return idEditAllowed;
+};

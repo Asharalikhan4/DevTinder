@@ -1,7 +1,26 @@
 import { Schema, model } from "mongoose";
 import { isEmail, isStrongPassword, isURL } from "validator";
+import config from "../config";
+import { sign } from "jsonwebtoken";
+import { compare } from "bcrypt";
 
-const UserSchema = new Schema({
+export interface IUser extends Document {
+    firstName: string;
+    lastName?: string;
+    emailId: string;
+    password: string;
+    photoUrl?: string;
+    about?: string;
+    skills: string[];
+    age?: number;
+    gender?: string;
+    createdAt: Date;
+    updatedAt: Date;
+    getJWT: () => string;
+    validatePassword: (inputPassword: string) => Promise<boolean>;
+};
+
+const UserSchema: Schema = new Schema({
     firstName: {
         type: String,
         required: true,
@@ -40,11 +59,9 @@ const UserSchema = new Schema({
     },
     gender: {
         type: String,
-        trim: true,
-        validate(value: string) {
-            if(!["male", "female", "others"]?.includes(value)) {
-                throw new Error("Gender data is not valid");
-            };
+        enum: {
+            values: ["Male", "Female", "Other"],
+            message: `{VALUE} is not a valid gender`
         }
     },
     photoUrl: {
@@ -70,6 +87,18 @@ const UserSchema = new Schema({
     timestamps: true,
 });
 
+UserSchema.index({ firstName: 1, lastName: 1 });
+
+UserSchema.methods.getJWT = function() {
+    const token: string = sign({ _id: this._id }, config?.jwtSecret, { expiresIn: "1h" });
+    return token;
+};
+
+UserSchema.methods.validatePassword = async function(inputPassword: string) {
+    const isPasswordValid: boolean = await compare(inputPassword, this.password);  // if you interchange the arguments then it will through an error or inconsistent results.
+    return isPasswordValid;
+};
+
 // In model you first pass the name of the model and then you pass the schema.
-const UserModel = model("User", UserSchema);
+const UserModel = model<IUser>("User", UserSchema);
 export default UserModel;

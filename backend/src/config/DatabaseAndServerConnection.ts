@@ -10,7 +10,7 @@ const DatabaseAndServerConnection = async (app: Express) => {
         printMongoDBConnectionInfo(dbConnectResponse);
         if(dbConnectResponse.connection.readyState === 1) {
             app.listen(8080, () => {
-                printExpressConnectionInfo(config.port)
+                printExpressConnectionInfo(config?.port)
             });
         };
     } catch (error) {
