@@ -1,6 +1,8 @@
 import Layout from "@/components/Layout/Layout";
+import ConnectionsPage from "@/pages/Connections/ConnectionsPage";
 import FeedPage from "@/pages/Feed/FeedPage";
 import ProfilePage from "@/pages/Profile/ProfilePage";
+import RequestsPage from "@/pages/Requests/RequestsPage";
 import SigninPage from "@/pages/Signin/SigninPage";
 import { createBrowserRouter } from "react-router";
 
@@ -20,7 +22,15 @@ const router = createBrowserRouter([
             {
                 path: "/profile",
                 element: <ProfilePage />
-            }       
+            },
+            {
+                path: "/connections",
+                element: <ConnectionsPage />
+            },
+            {
+                path: "/requests",
+                element: <RequestsPage />
+            }
         ]
     }
 ]);

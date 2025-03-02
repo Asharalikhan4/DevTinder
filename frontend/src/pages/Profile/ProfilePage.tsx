@@ -1,22 +1,7 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 
-interface UserProfile {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    emailId: string;
-    photoUrl: string;
-    about: string;
-    skills: string[];
-    createdAt: string;
-}
-
-interface ProfileProps {
-    user: UserProfile;
-}
-
-const ProfilePage: FC<ProfileProps> = () => {
+const ProfilePage: FC = () => {
 
     const user = useSelector((store: any) => store?.user);
 

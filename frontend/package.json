@@ -21,6 +21,7 @@
     "daisyui": "^4.12.23",
     "parcel": "^2.13.3",
     "process": "^0.11.10",
+    "stream-http": "^3.2.0",
     "typescript": "^5.7.3"
   },
   "dependencies": {

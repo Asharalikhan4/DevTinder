@@ -62,6 +62,18 @@ const Navbar: FC = () => {
                             >
                                 Settings
                             </Link>
+                            <Link
+                                to="/connections"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                Connections
+                            </Link>
+                            <Link
+                                to="/requests"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                Requests
+                            </Link>
                             <button
                                 onClick={handleLogout}
                                 className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

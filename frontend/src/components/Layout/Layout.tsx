@@ -14,7 +14,7 @@ const Layout: FC = () => {
 
     const fetchUser = async () => {
         try {
-            const response = await axios.get(`${process.env.BASE_URL}/user/get-user-profile`, {
+            const response = await axios.get(`${process.env.BASE_URL}/user/user-profile`, {
                 withCredentials: true
             });
             dispatch(addUser(response?.data?.user));
