@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "@/redux/slices/connectionSlice";
+import toast from "react-hot-toast";
+import ConnectionRequestCard from "@/components/ConnectionRequestCard/ConnectionRequestCard";
+import CustomPage from "@/components/CustomPage/CustomPage";
 
 const ConnectionsPage = () => {
 
@@ -15,8 +18,9 @@ const ConnectionsPage = () => {
                 withCredentials: true
             });
             dispatch(addConnections(response?.data?.connections));
+            toast.success(response?.data?.message);
         } catch (error) {
-            console.error(error);
+            toast.error("Something Went Wrong.");
         }
     };
 
@@ -27,16 +31,14 @@ const ConnectionsPage = () => {
     }, []);
 
     return (
-        <div className="lg:p-4">
+        <CustomPage className="lg:p-4">
             <div className="text-xl md:text-3xl font-bold text-indigo-600">Connections</div>
             {
                 connections && connections?.length > 0 ? (
                     <div>
                         {
                             connections?.map((connection: any) => (
-                                <div>
-                                    {connection?.firstName} {connection?.lastName}
-                                </div>
+                                <ConnectionRequestCard request={connection} onAccept={() => {}} onReject={() => {}}  />
                             ))
                         }
                     </div>
@@ -44,7 +46,7 @@ const ConnectionsPage = () => {
                     <div>No Connections Found.</div>
                 )
             }
-        </div>
+        </CustomPage>
     );
 };
 

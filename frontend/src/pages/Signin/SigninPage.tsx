@@ -10,8 +10,8 @@ const SigninPage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [emailId, setEmailId] = useState<string>("test@gmail.com");
-    const [password, setPassword] = useState<string>("asharrotH01+");
+    const [emailId, setEmailId] = useState<string>("ashar.khan@gmail.com");
+    const [password, setPassword] = useState<string>("asharAliKhan01+");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {

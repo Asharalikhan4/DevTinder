@@ -3,12 +3,13 @@ import { addFeed } from "@/redux/slices/feedSlice";
 import axios from "axios";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const FeedPage: FC = () => {
 
     const dispatch = useDispatch();
 
-    const feed = useSelector((state: any) => state.feed) || [];
+    const feed = useSelector((state: any) => state?.feed) || [];
 
     const getFeed = async () => {
         try {
@@ -16,26 +17,25 @@ const FeedPage: FC = () => {
                 withCredentials: true
             });
             dispatch(addFeed(response?.data?.data));
+            toast.success(response?.data?.message);
         } catch (error) {
-            console.error(error);
+            toast.error("Something Went Wrong")
         }
     };
 
-    // useEffect(() => {
-    //     if (!feed) {
-    //         getFeed();
-    //     };
-    // }, []);
-
     useEffect(() => {
-        getFeed();
-    }, [])
-
-    console.log("this is feed", feed);
+        if (!(feed?.length > 0)) {
+            getFeed();
+        };
+    }, []);
 
     return (
-        <div className="flex justify-center items-center h-full mt-5">
-            <ProfileCard profile={feed[0]} onLike={() => {}} onDislike={() => {}} />
+        <div className="">
+            {
+                feed?.map((profile: any) => (
+                    <ProfileCard profile={profile} onLike={() => {}} onDislike={() => {}} />
+                ))
+            }
         </div>
     );
 };

@@ -7,13 +7,13 @@ interface Profile {
   photoUrl: string;
   about: string;
   skills: string[];
-}
+};
 
 interface ProfileCardProps {
   profile: Profile;
   onLike: (userId: string) => void;
   onDislike: (userId: string) => void;
-}
+};
 
 const ProfileCard = ({ profile, onLike, onDislike }: ProfileCardProps) => {
   const [imageError, setImageError] = useState(false);
@@ -22,12 +22,10 @@ const ProfileCard = ({ profile, onLike, onDislike }: ProfileCardProps) => {
     setImageError(true);
   };
 
-  console.log(profile);
-
   return (
     <div className="flex flex-col max-w-md w-full mx-4 bg-white rounded-xl shadow-lg overflow-hidden">
       {/* Profile Image */}
-      <div className="relative aspect-square w-full bg-gray-100">
+      <div className="relative aspect-square w-full ">
         <img
           src={imageError ? 'https://geographyandyou.com/images/user-profile.png' : profile?.photoUrl}
           alt={`${profile?.firstName} ${profile?.lastName}`}
