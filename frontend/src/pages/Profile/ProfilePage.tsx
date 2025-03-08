@@ -1,20 +1,21 @@
+import CustomButton from '../../components/CustomButton';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 
 const ProfilePage: FC = () => {
 
-    const user = useSelector((store: any) => store?.user);
+    const user = useSelector((store: any) => store?.user) || {};
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                     {/* Profile Header */}
-                    <div className="bg-indigo-100 p-6 sm:p-8">
+                    <div className="flex flex-col md:flex-row gap-2 md:justify-between md:items-center bg-indigo-100 p-6 sm:p-8">
                         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                             <img
                                 className="h-24 w-24 sm:h-32 sm:w-32 rounded-full object-cover ring-4 ring-white transition-transform duration-200 hover:scale-105"
-                                src={user.photoUrl}
+                                src={user?.photoUrl}
                                 alt={`${user?.firstName} ${user?.lastName}`}
                             />
                             <div className="text-center sm:text-left">
@@ -27,6 +28,9 @@ const ProfilePage: FC = () => {
                                 </p>
                             </div>
                         </div>
+                        <CustomButton>
+                            Edit Profile
+                        </CustomButton>
                     </div>
 
                     {/* Profile Content */}
@@ -42,7 +46,7 @@ const ProfilePage: FC = () => {
                         {/* Skills Section */}
                         <div className="space-y-4">
                             <h2 className="text-xl font-semibold text-gray-800">Skills</h2>
-                            {user.skills.length > 0 ? (
+                            {user?.skills?.length > 0 ? (
                                 <div className="flex flex-wrap gap-2">
                                     {user?.skills?.map((skill, index) => (
                                         <span

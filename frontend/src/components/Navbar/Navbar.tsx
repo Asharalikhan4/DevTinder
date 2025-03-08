@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CustomButton from "../CustomButton";
 import { Link, useNavigate } from "react-router";
 import axios from "axios";
-import { removeUser } from "@/redux/slices/userSlice";
+import { removeUser } from "../../redux/slices/userSlice";
 
 const Navbar: FC = () => {
     const [isOpen, setIsOpen] = useState(false);

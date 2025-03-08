@@ -1,10 +1,10 @@
-import { addRequests } from "@/redux/slices/requestSlice";
+import { addRequests, removeSingleRequest } from "../../redux/slices/requestSlice";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import ConnectionRequestCard from "@/components/ConnectionRequestCard/ConnectionRequestCard";
-import CustomPage from "@/components/CustomPage/CustomPage";
+import ConnectionRequestCard from "../../components/ConnectionRequestCard/ConnectionRequestCard";
+import CustomPage from "../../components/CustomPage/CustomPage";
 
 const RequestsPage = () => {
 
@@ -28,7 +28,7 @@ const RequestsPage = () => {
             const response = await axios.post(`${process.env.BASE_URL}/request/review/${status}/${_id}`, {}, {
                 withCredentials: true,
             });
-            fetchRequests(); 3
+            dispatch(removeSingleRequest(_id));
             toast.success(response?.data?.message);
         } catch (error) {
             toast.error("Something Went Wrong.");

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addConnections } from "@/redux/slices/connectionSlice";
+import { addConnections } from "../../redux/slices/connectionSlice";
 import toast from "react-hot-toast";
-import ConnectionRequestCard from "@/components/ConnectionRequestCard/ConnectionRequestCard";
-import CustomPage from "@/components/CustomPage/CustomPage";
+import ConnectionRequestCard from "../../components/ConnectionRequestCard/ConnectionRequestCard";
+import CustomPage from "../../components/CustomPage/CustomPage";
 
 const ConnectionsPage = () => {
 

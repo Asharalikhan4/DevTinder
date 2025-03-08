@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { addUser } from "@/redux/slices/userSlice";
-import { useNavigate } from "react-router";
-import CustomButton from "@/components/CustomButton";
+import { addUser } from "../../redux/slices/userSlice";
+import { Link, useNavigate } from "react-router";
+import CustomButton from "../../components/CustomButton";
 
 const SigninPage: FC = () => {
 
@@ -72,6 +72,7 @@ const SigninPage: FC = () => {
                         <CustomButton type="submit" className="w-full">Sign In</CustomButton>
                     </div>
                 </form>
+                <div className="text-center mt-2 block text-gray-700 text-sm font-bold mb-2">Don't have an account? <Link to={"/signup"} className="text-indigo-600">Sign Up</Link></div>
             </div>
         </div>
     );

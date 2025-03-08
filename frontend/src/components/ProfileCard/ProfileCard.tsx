@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface Profile {
   _id: string;
@@ -11,11 +11,10 @@ interface Profile {
 
 interface ProfileCardProps {
   profile: Profile;
-  onLike: (userId: string) => void;
-  onDislike: (userId: string) => void;
+  handleAction: (status: string, _id: string) => void;
 };
 
-const ProfileCard = ({ profile, onLike, onDislike }: ProfileCardProps) => {
+const ProfileCard = ({ profile, handleAction}: ProfileCardProps) => {
   const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
@@ -24,7 +23,7 @@ const ProfileCard = ({ profile, onLike, onDislike }: ProfileCardProps) => {
 
   return (
     <div className="flex flex-col max-w-md w-full mx-4 bg-white rounded-xl shadow-lg overflow-hidden">
-      {/* Profile Image */}
+
       <div className="relative aspect-square w-full ">
         <img
           src={imageError ? 'https://geographyandyou.com/images/user-profile.png' : profile?.photoUrl}
@@ -34,14 +33,11 @@ const ProfileCard = ({ profile, onLike, onDislike }: ProfileCardProps) => {
         />
       </div>
 
-      {/* Profile Content */}
       <div className="p-6 flex flex-col gap-4">
-        {/* Name */}
         <h2 className="text-2xl font-bold text-gray-800">
           {profile?.firstName} {profile?.lastName}
         </h2>
 
-        {/* About */}
         <p className="text-gray-600">{profile?.about}</p>
 
         {/* Skills */}
@@ -63,7 +59,7 @@ const ProfileCard = ({ profile, onLike, onDislike }: ProfileCardProps) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              onDislike(profile?._id);
+              handleAction("ignored", profile?._id);
             }}
             className="flex-1 py-3 px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
           >
@@ -72,7 +68,7 @@ const ProfileCard = ({ profile, onLike, onDislike }: ProfileCardProps) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              onLike(profile?._id);
+              handleAction("interested", profile?._id);
             }}
             className="flex-1 py-3 px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >

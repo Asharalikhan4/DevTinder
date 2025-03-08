@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "@/redux/slices/userSlice";
+import { addUser } from "../../redux/slices/userSlice";
 
 const Layout: FC = () => {
 
