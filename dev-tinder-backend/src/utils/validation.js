@@ -1,19 +1,20 @@
 import validationFields from "validator";
+import { AppError } from "./appError.js";
 const { isEmail, isStrongPassword } = validationFields;
 
 export const validateSignupData = (req) => {
-    const { name, emailId, password, gender } = req.body;
+    const { name, email, password, gender } = req.body;
 
     if (!name) {
-        throw new Error("Name is not valid");
+        throw new AppError("Name is not valid", 400);
     };
 
     if (name?.length < 4 || name?.length > 20) {
         throw new Error("Name should be between 4 and 20 characters");
     };
 
-    if (!isEmail(emailId)) {
-        throw new Error("Email is not valid");
+    if (!email ||!isEmail(email)) {
+        throw new AppError("Email is not valid", 400);
     };
 
     if (!isStrongPassword(password)) {
@@ -22,5 +23,17 @@ export const validateSignupData = (req) => {
 
     if(!gender) {
         throw new Error("Gender is required")
+    };
+};
+
+export const validateSigninData = (req) => {
+    const { email, password } = req.body;
+
+    if(!email || !isEmail(email)) {
+        throw new AppError("Email is not valid", 400);
+    };
+
+    if(!password) {
+        throw new AppError("Password is required", 400);
     };
 };

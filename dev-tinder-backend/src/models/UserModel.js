@@ -1,5 +1,8 @@
+import { compare } from "bcrypt";
+import jwt from "jsonwebtoken";
 import { model, Schema } from "mongoose";
 import validationFields from "validator";
+import config from "../config/config.js";
 const { isEmail, isURL, isStrongPassword } = validationFields;
 
 
@@ -9,7 +12,7 @@ const UserSchema = new Schema({
         required: true,
         minLength: 4,
     },
-    emailId: {
+    email: {
         type: String,
         required: true,
         unique: true,
@@ -65,6 +68,18 @@ const UserSchema = new Schema({
 }, {
     timestamps: true,
 });
+
+UserSchema.index({ firstName: 1, lastName: 1 });
+
+UserSchema.methods.getJWT = function() {
+    const token = jwt.sign({ _id: this._id }, config?.jwtSecret, { expiresIn: "1h" });
+    return token;
+};
+
+UserSchema.methods.validatePassword = async function(inputPassword) {
+    const isPasswordValid = await compare(inputPassword, this.password);  // if you interchange the arguments then it will through an error or inconsistent results.
+    return isPasswordValid;
+};
 
 // In model you first pass the name of the model and then you pass the schema.
 const UserModel = model("User", UserSchema);

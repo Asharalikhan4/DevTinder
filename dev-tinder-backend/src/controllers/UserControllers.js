@@ -1,26 +1,39 @@
 import { hash } from "bcrypt";
-import { validateSignupData } from "../utils/validation.js";
+import { validateSigninData, validateSignupData } from "../utils/validation.js";
 import UserModel from "../models/UserModel.js";
-import printError from "../utils/printError.js";
+import { AppError } from "../utils/appError.js";
+import config from "../config/config.js";
 
 export const signup = async (req, res) => {
-    try {
-        validateSignupData(req);
-        const { name, emailId, password, gender, age, about, skills } = req.body;
-        const hashedPassword = await hash(password, 10);
-        const user = new UserModel({
-            name,
-            emailId,
-            password: hashedPassword,
-            age,
-            gender,
-            about,
-            skills
-        });
-        await user.save();
-        return res.status(201).json({ message: "User Created Successfully", user: user });
-    } catch (error) {
-        printError(error);
-        return res.status(400).json({ message: "Error saving the user" });
-    }
+    validateSignupData(req);
+    const { name, email, password, gender, age, about, skills } = req.body;
+    const hashedPassword = await hash(password, 10);
+    const user = new UserModel({
+        name,
+        email,
+        password: hashedPassword,
+        age,
+        gender,
+        about,
+        skills
+    });
+    await user.save();
+    return res.status(201).json({ message: "User Created Successfully", user: user });
+};
+
+export const signin = async (req, res) => {
+    validateSigninData(req);
+    const { email, password } = req.body;
+    const userExist = await UserModel.findOne({ email });
+    if (!userExist) {
+        throw new AppError("User does not exist.", 400);
+    };
+    const isPasswordValid = await userExist?.validatePassword(password);
+    if (!isPasswordValid) {
+        throw new AppError("Invalid Credentials", 400);
+    };
+    const token = await userExist.getJWT();
+    // add { httpOnly: true on production }
+    res.cookie("token", token, { expires: new Date(Date.now() + 12 * 3600000), httpOnly: true, secure: config.nodeEnv === "production" });     // cookie will expire in 12 hours
+    return res.status(200).json({ message: "User Signed In Successfully", user: userExist });
 };
