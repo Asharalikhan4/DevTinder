@@ -1,11 +1,18 @@
 import express from "express";
 const app = express();
+import cors from "cors";
+import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import DatabaseAndServerConnection from "./config/DatabaseAndServerConnection.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import printError from "./utils/printError.js";
 import { AppError } from "./utils/appError.js";
 
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
+app.use(cookieParser());
 app.use(morgan("dev")); // Console format -> type of request, endpoint of request, status of request, time it took, size of resource
 
 app.get("/", (req, res) => {
