@@ -24,7 +24,7 @@ export const signup = async (req, res) => {
 export const signin = async (req, res) => {
     validateSigninData(req);
     const { email, password } = req.body;
-    const userExist = await UserModel.findOne({ email });
+    const userExist = await UserModel.findOne({ email }).select("-createdAt -updatedAt -__v");
     if (!userExist) {
         throw new AppError("User does not exist.", 400);
     };
@@ -42,6 +42,12 @@ export const userProfile = async (req, res) => {
     if (!req?.user) {
         throw new AppError("No User Found", 400);
     };
-    console.log("user profile", req);
     return res.status(200).json({ message: "User Profile Fetched Successfully", user: req?.user });
+};
+
+export const logout = async (_, res) => {
+    // expires the cookie and clears it from the browser
+    res.cookie("token", null, { expires: new Date(Date.now()) });
+    res.clearCookie("token");
+    return res.status(200).json({ message: "User Logged Out Successfully" });
 };

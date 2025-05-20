@@ -1,6 +1,7 @@
 "use client";
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { ChangeEvent, FC, useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import {
   IoHeart,
   IoMailOutline,
@@ -11,18 +12,38 @@ import {
   IoLogoFacebook,
   IoLogoApple,
   IoArrowBackOutline,
-} from 'react-icons/io5';
+} from "react-icons/io5";
+import { signin } from "@/actions/user";
+import { useAuth } from "@/context/authContext";
 
-const SigninPage: React.FC = () => {
+const SigninPage: FC = () => {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { setUser } = useAuth();
+  const [signinFormData, setSigninFormData] = useState({
+    email: "ashar@gmail.com",
+    password: "asharrotH01+"
+  });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: handle sign-in logic
+    try {
+      const res = await signin(signinFormData);
+      toast.success(res?.message);
+      setUser(res?.user);
+      router.push("/");
+    } catch (error: any) {
+      toast.error(error);
+    }
   };
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setSigninFormData(prev => ({ ...prev, [name]: name === 'age' ? (value === '' ? '' : Number(value)) : value }));
+    },
+    [],
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -43,10 +64,11 @@ const SigninPage: React.FC = () => {
           <div className="flex items-center border border-gray-200 rounded-lg bg-gray-100 px-4 h-12">
             <IoMailOutline size={20} className="text-gray-500 mr-3" />
             <input
+              name="email"
               type="email"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={signinFormData.email}
+              onChange={handleChange}
               className="flex-1 bg-transparent outline-none text-gray-700"
               required
             />
@@ -56,10 +78,11 @@ const SigninPage: React.FC = () => {
           <div className="flex items-center border border-gray-200 rounded-lg bg-gray-100 px-4 h-12">
             <IoLockClosedOutline size={20} className="text-gray-500 mr-3" />
             <input
+              name="password"
               type={showPassword ? 'text' : 'password'}
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={signinFormData.password}
+              onChange={handleChange}
               className="flex-1 bg-transparent outline-none text-gray-700"
               required
             />
@@ -82,6 +105,7 @@ const SigninPage: React.FC = () => {
           {/* Sign In Button */}
           <button
             type="submit"
+            onClick={handleSubmit}
             className="w-full h-12 bg-red-500 text-white font-bold rounded-lg shadow hover:bg-red-600 transition"
           >
             Sign In

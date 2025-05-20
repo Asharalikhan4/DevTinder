@@ -10,7 +10,7 @@ export default async function verifyToken(req, _, next) {
     };
     const decodedObj = jwt.verify(token, config?.jwtSecret);
     const { _id } = decodedObj;
-    const user = await UserModel.findOne({ _id });
+    const user = await UserModel.findOne({ _id }).select("-createdAt -updatedAt -__v");
     if (!user) {
         throw new AppError("Invalid Token", 400)
     };

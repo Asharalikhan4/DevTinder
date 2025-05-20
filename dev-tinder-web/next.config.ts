@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     domains: [
-      'images.freeimages.com',   // <— add your hostname here
+      'images.freeimages.com',
+      "geographyandyou.com",   // <— add your hostname here
       // e.g. 'picsum.photos', 'cdn.example.com'
     ],
   },
