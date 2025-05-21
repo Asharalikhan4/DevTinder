@@ -12,7 +12,7 @@ export default function Hero() {
                     and coding style.
                 </p>
                 <div className="flex mt-4 gap-x-4">
-                    <Link href="/signup" className="border py-2 px-3 bg-[#E94057] text-white rounded-md">
+                    <Link href="/signup" className="border py-2 px-3 bg-[#E94057] hover:bg-[#e2233d] text-white rounded-md">
                         <button className="flex items-center gap-x-2 font-medium">
                             Get Started
                             <FaArrowRight />

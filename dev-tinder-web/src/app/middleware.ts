@@ -1,34 +1,23 @@
-// middleware.ts
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const token = request.cookies.get('token')?.value;
+export function middleware(request: NextRequest) {
+  const publicUrl = ['/signin','/signup','/verifyemail','/forgotpassword'];
+  const isPublicPath = publicUrl.includes(request.nextUrl.pathname);
 
-  // 1. Redirect already-authenticated users away from /signin
-  if (pathname === '/signin' && token) {
+  const isAuthenticated = request.cookies.get('token') !== undefined;
+  console.log('middleware log',{isPublicPath,isAuthenticated,pathname:request.nextUrl.pathname,token:request.cookies.get('token')})
+  if(!isAuthenticated && !isPublicPath) {
+    return NextResponse.redirect(new URL('/signin', request.url));
+  }
+  if(isAuthenticated && isPublicPath) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  // 2. Protect authenticated routes (e.g. /dashboard, /settings)
-  // Adjust the paths as needed for your app
-  const protectedPaths = ["/feed"];
-  if (protectedPaths.some(path => pathname.startsWith(path))) {
-    if (!token) {
-      // No token: redirect to sign-in
-      return NextResponse.redirect(new URL('/signin', request.url));
-    }
-    // Optionally, verify JWT here (e.g., using a verifyJwt function).
-    // If invalid, you could clear the cookie and redirect as well.
-  }
-
-  // 3. For all other paths, continue
   return NextResponse.next();
 }
-
-// Configure which paths the middleware applies to.
-// This example applies to all non-API and non-static routes.
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
+  ],
 };

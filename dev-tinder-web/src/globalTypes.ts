@@ -9,3 +9,12 @@ export interface User {
     about: string;
     skills: string[];
 };
+
+export interface CustomTinderCardProps {
+    _id: string;
+    photoUrl: string;
+    name: string;
+    age: number;
+    gender: string;
+    about: string;
+};
