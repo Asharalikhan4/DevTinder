@@ -21,3 +21,7 @@ export async function userProfile() {
 export async function logout() {
   return fetcher(`${process.env.NEXT_PUBLIC_BASE_URL}/user/logout`);
 };
+
+export async function feed() {
+  return fetcher(`${process.env.NEXT_PUBLIC_BASE_URL}/user/all-users`);
+};

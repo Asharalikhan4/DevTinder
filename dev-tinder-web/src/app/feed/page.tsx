@@ -1,8 +1,26 @@
-import { FC } from "react";
+"use client";
+import { feed } from "@/actions/user";
+import CustomTinderCard from "@/components/CustomTinderCardDeck/CustomTinderCardDeck";
+import { FC, useEffect, useState } from "react";
 
 const FeedPage: FC = () => {
+    const [users, setUsers] = useState([]);
+
+    async function fetchFeed() {
+        const data = await feed();
+        setUsers(data?.data)
+    };
+
+    useEffect(() => {
+        fetchFeed();
+    }, []);
+
+    console.log("users", users);
+
     return (
-        <div>Feed Page</div>
+        <div className="h-[calc(100vh-4rem)] flex items-center justify-center min-h-screen p-4">
+            <CustomTinderCard />
+        </div>
     );
 };
 

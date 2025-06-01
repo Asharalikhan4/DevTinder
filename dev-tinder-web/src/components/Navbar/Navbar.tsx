@@ -85,7 +85,7 @@ export default function Navbar() {
               </ul>
             </>
           ) : (
-            <Link href="/signin" className="btn btn-primary w-full text-center">
+            <Link href="/signin" className="btn btn-primary w-full text-center text-white">
               Sign In
             </Link>
           )}
