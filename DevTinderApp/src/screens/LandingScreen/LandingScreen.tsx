@@ -1,9 +1,7 @@
 import { FC } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-import colors from "../../config/colors";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import colors from "../../../config/colors";
 import SafeScreen from "../../components/SafeScreen/SafeScreen";
 
 
