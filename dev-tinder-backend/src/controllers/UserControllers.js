@@ -1,6 +1,7 @@
 import { hash } from "bcrypt";
 import { validateSigninData, validateSignupData } from "../utils/validation.js";
 import UserModel from "../models/UserModel.js";
+import ConnectionRequestModel from "../models/ConnectionRequestModel.js";
 import { AppError } from "../utils/appError.js";
 import config from "../config/config.js";
 
@@ -35,7 +36,7 @@ export const signin = async (req, res) => {
     const token = await userExist.getJWT();
     // add { httpOnly: true on production }
     res.cookie("token", token, { expires: new Date(Date.now() + 12 * 3600000), httpOnly: true, secure: config.nodeEnv === "production" });     // cookie will expire in 12 hours
-    return res.status(200).json({ message: "User Signed In Successfully", user: userExist });
+    return res.status(200).json({ message: "User Signed In Successfully", user: userExist, token: token });
 };
 
 export const userProfile = async (req, res) => {
@@ -45,9 +46,45 @@ export const userProfile = async (req, res) => {
     return res.status(200).json({ message: "User Profile Fetched Successfully", user: req?.user });
 };
 
-export const logout = async (_, res) => {
+export const logout = async (req, res) => {
     // expires the cookie and clears it from the browser
     res.cookie("token", null, { expires: new Date(Date.now()) });
     res.clearCookie("token");
     return res.status(200).json({ message: "User Logged Out Successfully" });
+};
+
+export const feed = async (req, res) => {
+    const loggedInUser = req?.user;
+    const page = parseInt(req?.query?.page) || 1;
+    let limit = parseInt(req?.query?.limit) || 10;
+    limit = limit > 50 ? 50 : limit;
+    const skip = (page - 1) * limit;
+
+    // Getting all the request which user has sent or recieved.
+    const connectionRequests = await ConnectionRequestModel?.find({ $or: [{ senderId: loggedInUser?._id }, { recieverId: loggedInUser?._id }] })?.select("senderId recieverId");
+
+    const hideUserFromFeed = new Set();
+    connectionRequests?.forEach(req => {
+        hideUserFromFeed.add(req?.senderId?.toString());
+        hideUserFromFeed.add(req?.recieverId?.toString());
+    });
+
+    const feedData = await UserModel
+        ?.find({
+            $and: [
+                { _id: { $nin: Array.from(hideUserFromFeed) } },
+                { _id: { $ne: loggedInUser?._id } }
+            ]
+        })
+        ?.select("firstName lastName photoUrl age gender about skills")
+        ?.skip(skip)
+        ?.limit(limit);
+
+
+    return res.status(200).json({ message: "Feed Fetched Successfully", data: feedData });
+};
+
+export const getAllUsers = async (req, res) => {
+    const users = await UserModel.find({}).select("name photoUrl age gender about skills");
+    return res.status(200).json({ message: "All Users Fetched Successfully", data: users });
 };
