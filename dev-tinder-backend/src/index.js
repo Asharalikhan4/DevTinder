@@ -3,6 +3,7 @@ const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import cronJobs from "./utils/cronJobs.js";
 import DatabaseAndServerConnection from "./config/DatabaseAndServerConnection.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import printError from "./utils/printError.js";
@@ -14,6 +15,7 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(morgan("dev")); // Console format -> type of request, endpoint of request, status of request, time it took, size of resource
+cronJobs();
 
 app.get("/", (req, res) => {
     res.status(200).json({ message: "DevTinder Api is working fine." });
