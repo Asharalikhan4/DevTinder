@@ -21,7 +21,7 @@ const SigninPage: FC = () => {
   const { setUser } = useAuth();
   const [signinFormData, setSigninFormData] = useState({
     email: "ashar@gmail.com",
-    password: "asharrotH01+"
+    password: "testingPassword01+"
   });
   const [showPassword, setShowPassword] = useState(false);
 

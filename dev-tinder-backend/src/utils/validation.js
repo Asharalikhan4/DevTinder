@@ -37,3 +37,7 @@ export const validateSigninData = (req) => {
         throw new AppError("Password is required", 400);
     };
 };
+
+export const validateEditProfileData = (req) => {
+  
+}

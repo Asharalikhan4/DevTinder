@@ -15,8 +15,6 @@ const FeedPage: FC = () => {
         fetchFeed();
     }, []);
 
-    console.log("users", users);
-
     return (
         <div className="h-[calc(100vh-4rem)] flex items-center justify-center min-h-screen p-4">
             <CustomTinderCard />

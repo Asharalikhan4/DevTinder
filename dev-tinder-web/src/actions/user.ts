@@ -25,3 +25,7 @@ export async function logout() {
 export async function feed() {
   return fetcher(`${process.env.NEXT_PUBLIC_BASE_URL}/user/all-users`);
 };
+
+export async function userConnections() {
+  return fetcher(`${process.env.NEXT_PUBLIC_BASE_URL}/user/connections`);
+};

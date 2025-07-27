@@ -33,7 +33,7 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar />
           {children}
-          <Toaster />
+          {/* <Toaster /> */}
         </AuthProvider>
       </body>
     </html >

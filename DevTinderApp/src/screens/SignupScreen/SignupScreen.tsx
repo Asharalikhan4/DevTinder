@@ -58,8 +58,6 @@ const SignupScreen = ({ navigation }) => {
         if (nativeEvent.key === 'Enter') handleAddSkill();
     };
 
-    console.log("Signup Form Data: ", signupFormData);
-
     return (
         <SafeScreen style={styles.container}>
             {/* <LinearGradient
