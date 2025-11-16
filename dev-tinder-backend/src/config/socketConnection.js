@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import crypto from "crypto";
+import ChatModel from "../models/ChatModel.js";
 
 const getSecretRoomId = (userId, targetUserId) => {
   return crypto
@@ -15,14 +16,35 @@ export default function socketConnection(server) {
     },
   });
   io.on("connection", (socket) => {
-    socket.on("joinChat", ({ name, userId, targetUserId }) => {
+    socket.on("joinChat", ({ userId, targetUserId }) => {
       const roomId = getSecretRoomId(userId, targetUserId);
       socket.join(roomId);
     });
 
-    socket.on("sendMessage", ({ name, userId, targetUserId, newMessage }) => {
-      const roomId = getSecretRoomId(userId, targetUserId);
-      io.to(roomId).emit("messageReceived", { name, newMessage })
+    socket.on("sendMessage", async ({ name, userId, targetUserId, newMessage }) => {
+      try {
+        const roomId = getSecretRoomId(userId, targetUserId);
+        let chat = await ChatModel.findOne({
+          participants: { $all: [userId, targetUserId] },
+        });
+        
+        if (!chat) {
+          chat = new ChatModel({
+            participants: [userId, targetUserId],
+            messages: [],
+          });
+        };
+
+        chat.messages.push({
+          senderId: userId,
+          message: newMessage,
+        });
+        
+        await chat.save();
+        io.to(roomId).emit("messageReceived", { name, newMessage });
+      } catch (err) {
+        console.log(err);
+      }
     });
 
     socket.on("disconnect", () => {});
