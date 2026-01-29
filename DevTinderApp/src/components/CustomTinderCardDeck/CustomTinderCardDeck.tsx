@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from "react";
 import {
   View,
   Text,
@@ -7,8 +7,8 @@ import {
   Animated,
   PanResponder,
   TouchableOpacity,
-} from 'react-native';
-import Ionicons  from "react-native-vector-icons/Ionicons"; // or from 'react-native-vector-icons/Ionicons'
+} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons"; // or from 'react-native-vector-icons/Ionicons'
 
 const users = [
   {
@@ -36,8 +36,8 @@ export default function CustomTinderCardDeck() {
   const pan = useRef(new Animated.ValueXY()).current;
 
   const nextUser = () => {
-    setCurrentIndex((prev) => (prev + 1) % users.length);
-    pan.setValue({ x: 0, y: 0 });
+    setCurrentIndex(prev => (prev + 1) % users.length);
+    pan.setValue({x: 0, y: 0});
   };
 
   const panResponder = useRef(
@@ -45,38 +45,37 @@ export default function CustomTinderCardDeck() {
       onMoveShouldSetPanResponder: (_, gestureState) => {
         return Math.abs(gestureState.dx) > 10;
       },
-      onPanResponderMove: Animated.event(
-        [null, { dx: pan.x }],
-        { useNativeDriver: false }
-      ),
+      onPanResponderMove: Animated.event([null, {dx: pan.x}], {
+        useNativeDriver: false,
+      }),
       onPanResponderRelease: (_, gesture) => {
         if (gesture.dx > 120) {
           // Swipe right
           Animated.timing(pan, {
-            toValue: { x: 500, y: 0 },
+            toValue: {x: 500, y: 0},
             duration: 200,
             useNativeDriver: false,
           }).start(nextUser);
         } else if (gesture.dx < -120) {
           // Swipe left
           Animated.timing(pan, {
-            toValue: { x: -500, y: 0 },
+            toValue: {x: -500, y: 0},
             duration: 200,
             useNativeDriver: false,
           }).start(nextUser);
         } else {
           Animated.spring(pan, {
-            toValue: { x: 0, y: 0 },
+            toValue: {x: 0, y: 0},
             useNativeDriver: false,
           }).start();
         }
       },
-    })
+    }),
   ).current;
 
   const rotate = pan.x.interpolate({
     inputRange: [-200, 0, 200],
-    outputRange: ['-15deg', '0deg', '15deg'],
+    outputRange: ["-15deg", "0deg", "15deg"],
   });
 
   const user = users[currentIndex];
@@ -87,17 +86,18 @@ export default function CustomTinderCardDeck() {
         style={[
           styles.card,
           {
-            transform: [{ translateX: pan.x }, { rotate }],
+            transform: [{translateX: pan.x}, {rotate}],
           },
         ]}
-        {...panResponder.panHandlers}
-      >
-        <Image source={{ uri: user.photoUrl }} style={styles.avatar} />
-        <Text style={styles.name}>{user.name}, {user.age}</Text>
+        {...panResponder.panHandlers}>
+        <Image source={{uri: user.photoUrl}} style={styles.avatar} />
+        <Text style={styles.name}>
+          {user.name}, {user.age}
+        </Text>
         <Text style={styles.about}>{user.about}</Text>
         <Text style={styles.gender}>Gender: {user.gender}</Text>
         <View style={styles.skills}>
-          {user.skills.map((skill) => (
+          {user.skills.map(skill => (
             <View key={skill} style={styles.skillBadge}>
               <Text style={styles.skillText}>{skill}</Text>
             </View>
@@ -119,23 +119,23 @@ export default function CustomTinderCardDeck() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 20,
-    backgroundColor: '#fdfdfd',
+    backgroundColor: "#fdfdfd",
   },
   card: {
-    width: '100%',
+    width: "100%",
     maxWidth: 350,
     height: 500,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: {width: 0, height: 10},
     shadowRadius: 15,
     elevation: 5,
   },
@@ -147,51 +147,51 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   about: {
     fontSize: 14,
-    textAlign: 'center',
-    color: '#666',
+    textAlign: "center",
+    color: "#666",
     marginTop: 5,
     marginBottom: 10,
   },
   gender: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
   skills: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     marginTop: 10,
     gap: 6,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   skillBadge: {
-    backgroundColor: '#fee2e2',
+    backgroundColor: "#fee2e2",
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: 20,
     margin: 4,
   },
   skillText: {
-    color: '#dc2626',
+    color: "#dc2626",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   buttonRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 20,
     marginTop: 30,
   },
   nopeButton: {
-    backgroundColor: '#e5e7eb',
+    backgroundColor: "#e5e7eb",
     padding: 14,
     borderRadius: 30,
   },
   likeButton: {
-    backgroundColor: '#ef4444',
+    backgroundColor: "#ef4444",
     padding: 14,
     borderRadius: 30,
   },

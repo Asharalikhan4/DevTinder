@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Modal, StyleSheet } from 'react-native';
+import React, {useState} from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Modal,
+  StyleSheet,
+} from "react-native";
 
 interface Option {
   label: string;
@@ -19,18 +26,21 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
   options,
   selectedValue,
   onValueChange,
-  placeholder = 'Select',
+  placeholder = "Select",
 }) => {
   const [visible, setVisible] = useState(false);
 
   const selectedLabel =
-    options.find(option => option.value === selectedValue)?.label || placeholder;
+    options.find(option => option.value === selectedValue)?.label ||
+    placeholder;
 
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
 
-      <TouchableOpacity style={styles.dropdown} onPress={() => setVisible(true)}>
+      <TouchableOpacity
+        style={styles.dropdown}
+        onPress={() => setVisible(true)}>
         <Text style={styles.selectedText}>{selectedLabel}</Text>
       </TouchableOpacity>
 
@@ -38,20 +48,18 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         <TouchableOpacity
           style={styles.modalOverlay}
           activeOpacity={1}
-          onPress={() => setVisible(false)}
-        >
+          onPress={() => setVisible(false)}>
           <View style={styles.modalContent}>
             <FlatList
               data={options}
               keyExtractor={item => item.value}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <TouchableOpacity
                   style={styles.option}
                   onPress={() => {
                     onValueChange(item.value);
                     setVisible(false);
-                  }}
-                >
+                  }}>
                   <Text style={styles.optionText}>{item.label}</Text>
                 </TouchableOpacity>
               )}
@@ -71,28 +79,28 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#444',
+    color: "#444",
     marginBottom: 4,
   },
   dropdown: {
     padding: 12,
     borderWidth: 1,
-    borderColor: '#E94057',
+    borderColor: "#E94057",
     borderRadius: 8,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   selectedText: {
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.2)",
     paddingHorizontal: 20,
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     paddingVertical: 8,
     elevation: 5,
@@ -100,7 +108,7 @@ const styles = StyleSheet.create({
   option: {
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
   optionText: {
     fontSize: 16,

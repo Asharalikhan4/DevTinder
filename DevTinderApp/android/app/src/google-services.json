@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "99986841609",
+    "project_id": "devtinder-cef03",
+    "storage_bucket": "devtinder-cef03.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99986841609:android:9f6472b6ce974c2aa298d8",
+        "android_client_info": {
+          "package_name": "com.devtinderapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByR0FstEBXITUXJLJddX4EA__9gk24Lig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

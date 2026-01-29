@@ -1,11 +1,11 @@
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+const {getDefaultConfig, mergeConfig} = require("@react-native/metro-config");
 
 const defaultConfig = getDefaultConfig(__dirname);
 
 defaultConfig.resolver.sourceExts = [
   ...defaultConfig.resolver.sourceExts,
-  'ts',
-  'tsx',
+  "ts",
+  "tsx",
 ];
 
 const config = {
@@ -15,4 +15,3 @@ const config = {
 };
 
 module.exports = mergeConfig(defaultConfig, config);
-
