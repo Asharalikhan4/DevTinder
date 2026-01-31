@@ -1,6 +1,7 @@
 "use client";
 import { userConnections } from "@/actions/user";
 import ConnectionCard from "@/components/ConnectionCard/ConnectionCard";
+import { User } from "@/globalTypes";
 import { useEffect, useState } from "react";
 
 export default function ConnectionsPage() {
@@ -26,8 +27,8 @@ export default function ConnectionsPage() {
         Your Connections
       </h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {connections?.map((user) => (
-          <ConnectionCard key={user._id} user={user} />
+        {connections?.map((user: User) => (
+          <ConnectionCard key={user?._id} user={user} />
         ))}
       </div>
     </section>

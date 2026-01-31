@@ -8,6 +8,7 @@ import DatabaseAndServerConnection from "./config/DatabaseAndServerConnection.js
 import UserRoutes from "./routes/UserRoutes.js";
 import ConnectionRequestRoutes from "./routes/ConnectionRequestRoutes.js";
 import ChatRoutes from "./routes/ChatRoutes.js";
+import NotificationRoutes from "./routes/NotificationRoutes.js";
 import printError from "./utils/printError.js";
 import { AppError } from "./utils/appError.js";
 
@@ -29,6 +30,7 @@ app.get("/", (req, res) => {
 app.use("/user", UserRoutes);
 app.use("/connection-request", ConnectionRequestRoutes);
 app.use("/chat", ChatRoutes);
+app.use("/notification", NotificationRoutes)
 
 // 404 handler
 app.use((err, req, res) => {
