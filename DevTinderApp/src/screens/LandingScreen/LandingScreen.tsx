@@ -11,14 +11,16 @@ const LandingScreen: FC = () => {
     navigation.navigate("SigninScreen");
   };
 
+  const handleCreateAccountClick = () => {
+    navigation.navigate("SignupScreen");
+  };
+
   return (
     <SafeScreen style={styles.landingScreen}>
       {/* <CustomCarousel data={carouselData} /> */}
-      <View style={styles.button}>
-        <Pressable>
-          <Text style={styles.buttonText}>Create an Account</Text>
-        </Pressable>
-      </View>
+      <Pressable style={styles.button} onPress={handleCreateAccountClick}>
+        <Text style={styles.buttonText}>Create an Account</Text>
+      </Pressable>
 
       <View style={styles.signInBlock}>
         <Text style={styles.promptText}>Already have an account?{` `}</Text>

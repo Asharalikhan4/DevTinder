@@ -17,8 +17,9 @@ import notifee, {
   AndroidImportance,
   AndroidVisibility,
 } from "@notifee/react-native";
+import { RootStackParamList } from "./src/globalTypes/navigation";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
   const requestPermissionAndroid = async () => {
@@ -27,9 +28,7 @@ function App(): React.JSX.Element {
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       getToken();
-      // Alert.alert("Permission Granted");
     } else {
-      // Alert.alert("Permission Denied");
     }
   };
 
@@ -98,6 +97,18 @@ function App(): React.JSX.Element {
     const token = await messaging().getToken();
     console.log("token", token);
   };
+
+  // const config = {
+  //   screens: {
+  //     SigninScreen: SigninScreen,
+  //     SignupScreen: SignupScreen
+  //   },
+  // };
+
+  // const linking = {
+  //   prefixes: ["deeplink://"],
+  //   config
+  // };
 
   return (
     <UserProvider>

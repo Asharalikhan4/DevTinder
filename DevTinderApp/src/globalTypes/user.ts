@@ -3,7 +3,7 @@ interface signinFormDataTypes {
   password: string;
 }
 
-interface signupFormDataTypes {
+interface SignupFormDataTypes {
   name: string;
   email: string;
   password: string;
@@ -13,4 +13,4 @@ interface signupFormDataTypes {
   skills: string[];
 }
 
-export type {signinFormDataTypes, signupFormDataTypes};
+export type {signinFormDataTypes, SignupFormDataTypes};
