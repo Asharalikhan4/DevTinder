@@ -12,14 +12,15 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome6";
 import SafeScreen from "../../components/SafeScreen/SafeScreen";
-import {signupFormDataTypes} from "../../globalTypes/user";
+import {SignupFormDataTypes} from "../../globalTypes/user";
+import { Pressable } from "react-native";
 // import { LinearGradient } from 'expo-linear-gradient';
 // import { Ionicons } from '@expo/vector-icons';
 
 const SignupScreen = ({navigation}) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [skillInput, setSkillInput] = useState("");
-  const [signupFormData, setSignupFormData] = useState<signupFormDataTypes>({
+  const [signupFormData, setSignupFormData] = useState<SignupFormDataTypes>({
     name: "",
     email: "",
     password: "",
@@ -57,6 +58,10 @@ const SignupScreen = ({navigation}) => {
   const handleSkillKeyPress = ({nativeEvent}) => {
     if (nativeEvent.key === "Enter") handleAddSkill();
   };
+  
+  const handleSignUpButtonClick = () => {
+    console.log(signupFormData);
+  };
 
   return (
     <SafeScreen style={styles.container}>
@@ -82,7 +87,7 @@ const SignupScreen = ({navigation}) => {
               <Ionicons name="heart" size={50} color="#E94057" />
             </View>
             <Text style={styles.appName}>Dev Tinder</Text>
-            {/* <Text style={styles.tagline}>Find your perfect match</Text> */}
+             {/*<Text style={styles.tagline}>Find your perfect match</Text> */}
           </View>
 
           {/* <View style={styles.headerContainer}>
@@ -181,6 +186,7 @@ const SignupScreen = ({navigation}) => {
                 style={styles.inputIcon}
               />
               <TextInput
+                style={styles.input}
                 placeholder="Tell us about yourself"
                 placeholderTextColor="#8A8A8A"
                 value={signupFormData.about}
@@ -213,7 +219,7 @@ const SignupScreen = ({navigation}) => {
 
             {/* Display Skill Tags */}
             <View style={styles.skillTagsContainer}>
-              {signupFormData.skills.map(skill => (
+              {signupFormData?.skills?.map(skill => (
                 <View key={skill} style={styles.skillTag}>
                   <Text style={styles.skillText}>{skill}</Text>
                   <TouchableOpacity onPress={() => handleRemoveSkill(skill)}>
@@ -231,9 +237,9 @@ const SignupScreen = ({navigation}) => {
               </Text>
             </View>
 
-            <TouchableOpacity style={styles.signUpButton}>
+            <Pressable style={styles.signUpButton} onPress={handleSignUpButtonClick}>
               <Text style={styles.signUpButtonText}>Sign Up</Text>
-            </TouchableOpacity>
+            </Pressable>
 
             <View style={styles.orContainer}>
               <View style={styles.divider} />
@@ -288,6 +294,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: "center",
     // marginTop: 60,
+    marginBottom: 20
   },
   logoCircle: {
     width: 80,
