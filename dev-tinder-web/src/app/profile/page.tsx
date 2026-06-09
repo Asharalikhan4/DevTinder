@@ -95,12 +95,7 @@ const ProfilePage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="p-5">
-        <button onClick={() => router.back()} className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
-          <IoArrowBackOutline size={24} className="text-gray-600" />
-        </button>
-      </div>
+    <div className="flex flex-col">
       <div className="flex-grow flex flex-col items-center px-5">
         <div className="bg-primary-100 rounded-full p-1 shadow-lg">
           <img src={user?.photoUrl} alt="Avatar" className="w-32 h-32 rounded-full object-cover" />
