@@ -20,11 +20,12 @@ import SafeScreen from "../../components/SafeScreen/SafeScreen";
 
 const {width} = Dimensions.get("window");
 
-const SigninScreen = ({navigation}) => {
+const SigninScreen = ({ navigation }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
   const [signinFormData, setSigninFormData] = useState<signinFormDataTypes>({
-    email: "ashar@gmail.com",
-    password: "asharrotH01+",
+    email: "hamza@gmail.com",
+    password: "testingPassword01+",
   });
 
   const handleInputChange = (fieldName: string, value: string) => {
@@ -35,6 +36,7 @@ const SigninScreen = ({navigation}) => {
   };
 
   const handleSignin = async () => {
+    setLoading(true);
     try {
       const res = await signin(signinFormData);
       Toast.show({
@@ -42,17 +44,19 @@ const SigninScreen = ({navigation}) => {
         text2: res?.message || "Signin successful!",
       });
       navigation.navigate("FeedScreen");
+      setLoading(false);
     } catch (error: any) {
       Toast.show({
         type: "error",
         text2: error?.message || "Signin failed. Please try again.",
       });
+      setLoading(false);
     }
   };
 
   return (
     <SafeScreen style={styles.container}>
-      {/* <LinearGradient
+       {/*<LinearGradient
         colors={['#E94057', '#F27121']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -119,7 +123,7 @@ const SigninScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <Pressable style={styles.signInButton} onPress={handleSignin}>
-            <Text style={styles.signInButtonText}>Sign In</Text>
+            <Text style={styles.signInButtonText}>{loading ? "Loading" : "Sign In" }</Text>
           </Pressable>
 
           <View style={styles.orContainer}>

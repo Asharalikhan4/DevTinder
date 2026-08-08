@@ -31,10 +31,9 @@ export const signup = async (req, res) => {
 };
 
 export const signin = async (req, res) => {
-  validateSigninData(req);
-  const { email, password } = req.body;
+  const { email, password } = validateSigninData(req);
   const userExist = await UserModel.findOne({ email }).select(
-    "-createdAt -updatedAt -__v",
+    "-createdAt -updatedAt -__v -password",
   );
   if (!userExist) {
     throw new AppError("User does not exist.", 400);

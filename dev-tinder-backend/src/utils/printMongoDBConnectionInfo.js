@@ -20,9 +20,7 @@ export default function printMongoDBConnectionInfo(connection) {
     // DriverVersion: chalk.yellow(require('mongodb/package.json').version),
     ConnectionTime: new Date().toLocaleString(),
     SafeMode: conn.client?.options?.writeConcern?.w || 'Default',
-    SSL: conn.client?.options?.ssl ? 'Enabled' : 'Disabled',
-    ConnectionString: conn._connectionString
-      ?.replace(/:\w+@/, ':<PASSWORD>@') // Mask password
+    SSL: conn.client?.options?.ssl ? 'Enabled' : 'Disabled'
   };
 
   const infoBox = boxen(
